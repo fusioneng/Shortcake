@@ -94,6 +94,12 @@ class Shortcode_UI_Field_Post_Select {
 		$requested_shortcode = isset( $_GET['shortcode'] ) ? sanitize_text_field( $_GET['shortcode'] ) : null;
 		$requested_attr      = isset( $_GET['attr'] ) ? sanitize_text_field( $_GET['attr'] ) : null;
 
+		$include = filter_input( INPUT_GET, 'include', FILTER_SANITIZE_NUMBER_INT, FILTER_REQUIRE_ARRAY );
+		if ( ! is_array( $include ) ) {
+			$include = (array) explode( ',', filter_input( INPUT_GET, 'include', FILTER_SANITIZE_STRING ) );
+		}
+		$include = array_filter( array_map( 'intval', $include ) );
+
 		$response = array(
 			'items'          => array(),
 			'found_items'    => 0,
@@ -136,9 +142,8 @@ class Shortcode_UI_Field_Post_Select {
 			$query_args['s'] = sanitize_text_field( $_GET['s'] );
 		}
 
-		if ( ! empty( $_GET['include'] ) ) {
-			$post__in                          = is_array( $_GET['include'] ) ? $_GET['include'] : explode( ',', $_GET['include'] );
-			$query_args['post__in']            = array_map( 'intval', $post__in );
+		if ( ! empty( $include ) ) {
+			$query_args['post__in']            = $include;
 			$query_args['orderby']             = 'post__in';
 			$query_args['ignore_sticky_posts'] = true;
 		}
