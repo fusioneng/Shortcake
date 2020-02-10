@@ -118,41 +118,8 @@ var shortcodeViewConstructor = {
 	delayedFetch: function() {
 		return fetcher.queueToFetch({
 			post_id: $( '#post_ID' ).val(),
-			shortcode: this.shortcodeModel.formatShortcode(),
-			nonce: shortcodeUIData.nonces.preview,
+			shortcode: this.shortcodeModel.formatShortcode()
 		});
-	},
-
-	/**
-	 * Fetch a preview of a single shortcode.
-	 *
-	 * Async. Sets this.content and calls this.render.
-	 *
-	 * @return undefined
-	 */
-	fetch: function() {
-		var self = this;
-
-		if ( ! this.fetching ) {
-			this.fetching = true;
-
-			wp.ajax.post( 'do_shortcode', {
-				post_id: $( '#post_ID' ).val(),
-				shortcode: this.shortcodeModel.formatShortcode(),
-				nonce: shortcodeUIData.nonces.preview,
-			}).done( function( response ) {
-				if ( '' === response ) {
-					self.content = '<span class="shortcake-notice shortcake-empty">' + self.shortcodeModel.formatShortcode() + '</span>';
-				} else {
-					self.content = response;
-				}
-			}).fail( function() {
-				self.content = '<span class="shortcake-error">' + shortcodeUIData.strings.mce_view_error + '</span>';
-			} ).always( function() {
-				delete self.fetching;
-				self.render( null, true );
-			} );
-		}
 	},
 
 	/**
