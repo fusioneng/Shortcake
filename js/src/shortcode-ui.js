@@ -49,6 +49,18 @@ $(document).ready(function(){
 			frame = wp.media.editor.open( editor, options );
 		}
 
+		// This feature fixed some bugs:
+		// 	- duplicate images while loading https://wordpress.org/support/topic/weird-conflict-shortcake-ui-arve-plugins-images-being-uploaded-multiple-times/
+		//	- fix unclickable button, after insert shortcake shortcode https://github.com/wp-shortcake/shortcake/issues/788
+		// This fix on based solution "zoliszabo (@zoliszabo)", but with my changes (Fix zoliszabo has errors duplicating upload-window on each image)
+		// Because I have hung initialization uploader on click's event ".shortcake-add-post-element"
+		// ( https://github.com/zoliszabo/shortcake/commit/32097ce6989509558bbcdab5906aa43474bebef8 ).
+		frame.uploader.uploader.uploader.setOption(
+			'runtimes',
+			frame.uploader.uploader.uploader.getOption('runtimes'),
+			false
+		);
+
 		// Make sure to reset state when closed.
 		frame.once( 'close submit', function() {
 			frame.mediaController.reset();

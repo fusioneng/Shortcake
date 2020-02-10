@@ -69,7 +69,9 @@ var MediaController = wp.media.controller.State.extend({
 		menuItem.render();
 
 		this.frame.setState( 'insert' );
-		this.frame.uploader.uploader.uploader.init();
+		// This string is duplicating "Uploading images"
+		// This bug has appeared from fix issue https://github.com/wp-shortcake/shortcake/issues/788
+		//this.frame.uploader.uploader.uploader.init();
 	},
 
 	setActionSelect: function() {
