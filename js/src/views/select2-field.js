@@ -122,12 +122,33 @@ sui.views.editAttributeSelect2Field = sui.views.editAttributeField.extend( {
 				dataType: 'json',
 				delay: 250,
 				data: function (params) {
+
+					var shortcode = self.shortcode.get( 'shortcode_tag' ),
+						attr = self.model.get( 'attr' ),
+						filterName = [ shortcode, attr, 'ajax-data' ].join('.'),
+						collection = _.flatten( _.values( self.views.parent.views._views ) );
+
+					/**
+					 * Filter any additional parameters sent along with search request.
+					 *
+					 * Called as `{shortcodeName}.{attributeName}.ajax-data`.
+					 *
+					 * @param ajaxData (object)
+					 *           Default fields sent with request
+					 * @param viewModels (array)
+					 *           The collections of views (editAttributeFields)
+					 *                         which make up this shortcode UI form
+					 * @param shortcode (object)
+					 *           Reference to the shortcode model which this attribute belongs to.
+					 */
+					var ajaxData = wp.shortcake.hooks.applyFilters( filterName, self.ajaxData, collection, self.shortcode );
+
 					return $.extend( {
 						s         : params.term, // search term
 						page      : params.page,
 						shortcode : self.shortcode.get( 'shortcode_tag'),
-						attr      : self.model.get( 'attr' )
-					}, self.ajaxData );
+						attr      : self.model.get( 'attr' ),
+					}, ajaxData );
 				},
 				processResults: function (response, params) {
 					if ( ! response.success || 'undefined' === typeof response.data ) {
