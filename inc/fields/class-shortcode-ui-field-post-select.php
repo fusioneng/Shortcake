@@ -145,7 +145,7 @@ class Shortcode_UI_Field_Post_Select {
 
 		$query                  = new WP_Query( $query_args );
 		$post_types             = $query->get( 'post_type' );
-		$is_multiple_post_types = count( $post_types ) > 1 || 'any' === $post_types;
+		$is_multiple_post_types = is_array( $post_types ) && count( $post_types ) > 1 || 'any' === $post_types;
 
 		foreach ( $query->posts as $post_id ) {
 			$post_type     = get_post_type( $post_id );
