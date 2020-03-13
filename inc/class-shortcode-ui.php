@@ -511,16 +511,15 @@ class Shortcode_UI {
 
 		// Get current shortcode tag from the current filter
 		// by stripping `shortcode_atts_` from start of string.
-		$shortcode_tag = substr( current_filter(), 15 );
-
-		if ( ! isset( $this->shortcodes[ $shortcode_tag ] ) ) {
+		$shortcode_tag  = substr( current_filter(), 15 );
+		$shortcode_args = $this->get_shortcode( $shortcode_tag );
+		if ( ! $shortcode_args ) {
 			return $out;
 		}
 
 		$fields = Shortcode_UI_Fields::get_instance()->get_fields();
-		$args   = $this->shortcodes[ $shortcode_tag ];
 
-		foreach ( $args['attrs'] as $attr ) {
+		foreach ( $shortcode_args['attrs'] as $attr ) {
 
 			$default = isset( $fields[ $attr['type'] ]['encode'] ) ? $fields[ $attr['type'] ]['encode'] : false;
 			$encoded = isset( $attr['encode'] ) ? $attr['encode'] : $default;
