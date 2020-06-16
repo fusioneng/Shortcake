@@ -65,8 +65,11 @@ var MediaController = wp.media.controller.State.extend({
 		this.props.set( 'insertCallback', this.insertCallback );
 
 		var menuItem = this.frame.menu.get().get('shortcode-ui');
-		menuItem.options.text = shortcodeUIData.strings.media_frame_title;
-		menuItem.render();
+
+		if ( menuItem ) {
+			menuItem.options.text = shortcodeUIData.strings.media_frame_title;
+			menuItem.render();
+		}
 
 		this.frame.setState( 'insert' );
 		this.frame.uploader.uploader.uploader.init();
