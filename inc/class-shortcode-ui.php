@@ -445,6 +445,25 @@ class Shortcode_UI {
 			// @codingStandardsIgnoreEnd
 		}
 
+		// Get the Shortcode tag and set the response if any
+		preg_match_all( '@\[([^<>&/\[\]\x00-\x20=]++)@', $shortcode, $matches );
+		$shortcode_tag = isset( $matches[1][0] ) ? $matches[1][0] : '';
+
+		/**
+		 * Filter the shortcode preview
+		 *
+		 * Used to render a custom preview for the shortcodes on the editor
+		 *
+		 * @param string $pre_option    The default value to return if the custom preview hasn't been set.
+		 * @param string $shortcode_tag Shortcode tag name.
+		 * @param string $shortcode     Shortcode used.
+		 * @param array  $options       Shortcode UI options for the shortcode tag
+		 */
+		$response = apply_filters( 'shortcode_ui_preview', false, $shortcode_tag, $shortcode, $this->get_shortcode( $shortcode_tag ) );
+		if ( false !== $response ) {
+			return $response;
+		}
+
 		ob_start();
 		/**
 		 * Fires before shortcode is rendered in preview.
