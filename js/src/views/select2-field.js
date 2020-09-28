@@ -126,7 +126,8 @@ sui.views.editAttributeSelect2Field = sui.views.editAttributeField.extend( {
 						s         : params.term, // search term
 						page      : params.page,
 						shortcode : self.shortcode.get( 'shortcode_tag'),
-						attr      : self.model.get( 'attr' )
+						attr      : self.model.get( 'attr' ),
+						fields    : self.$el.parents('form').serialize()
 					}, self.ajaxData );
 				},
 				processResults: function (response, params) {
