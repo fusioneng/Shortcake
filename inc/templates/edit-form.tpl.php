@@ -28,7 +28,7 @@
 <script type="text/html" id="tmpl-shortcode-ui-field-url">
 	<div class="field-block shortcode-ui-field-url shortcode-ui-attribute-{{ data.attr }}">
 		<label for="{{ data.id }}">{{{ data.label }}}</label>
-		<input type="url" name="{{ data.attr }}" id="{{ data.id }}" value="{{ data.value }}" class="code" {{{ data.meta }}}/>
+		<input type="url" name="{{ data.attr }}" id="{{ data.id }}" value="{{ data.value }}" class="code {{data.class}}" {{{ data.meta }}}/>
 		<# if ( typeof data.description == 'string' && data.description.length ) { #>
 			<p class="description">{{{ data.description }}}</p>
 		<# } #>
