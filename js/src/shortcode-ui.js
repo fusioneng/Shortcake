@@ -5,22 +5,22 @@ var sui = require('sui-utils/sui'),
 	wp = require('wp'),
 	$ = require('jquery');
 
-$(document).ready(function(){
+// Create collection of shortcode models from data.
+sui.shortcodes.add( shortcodeUIData.shortcodes );
 
-	// Create collection of shortcode models from data.
-	sui.shortcodes.add( shortcodeUIData.shortcodes );
+wp.media.view.MediaFrame.Post = mediaFrame;
 
-	wp.media.view.MediaFrame.Post = mediaFrame;
+// Register a view for each shortcode.
+sui.shortcodes.each( function( shortcode ) {
+	if ( wp.mce.views ) {
+		wp.mce.views.register(
+			shortcode.get('shortcode_tag'),
+			shortcodeViewConstructor
+		);
+	}
+} );
 
-	// Register a view for each shortcode.
-	sui.shortcodes.each( function( shortcode ) {
-		if ( wp.mce.views ) {
-			wp.mce.views.register(
-				shortcode.get('shortcode_tag'),
-				shortcodeViewConstructor
-			);
-		}
-	} );
+$(function(){
 
 	$(document.body).on( 'click', '.shortcake-add-post-element', function( event ) {
 
@@ -39,7 +39,7 @@ $(document).ready(function(){
 		// Remove focus from the `.shortcake-add-post-element` button.
 		// Prevents Opera from showing the outline of the button above the modal.
 		// See: https://core.trac.wordpress.org/ticket/22445
-		$el.blur();
+		$el.trigger('blur');
 
 		if ( frame ) {
 			frame.mediaController.setActionSelect();

@@ -30,8 +30,7 @@
         position: absolute;
         top: 50%;
         left: 50%;
-        -webkit-transform: translate(-50%, -50%);
-                transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
         font-size: inherit;
         line-height: inherit;
         width: auto;
@@ -186,7 +185,6 @@
       width: 60px;
       height: 5px;
       display: block;
-      -webkit-animation: attachment-preview-loading 1.3s infinite 1s linear;
       animation: attachment-preview-loading 1.3s infinite 1s linear; }
   .edit-shortcode-form .shortcake-attachment-preview-container .filename {
     line-height: 1.4em; }
@@ -195,12 +193,6 @@
   display: none; }
   .edit-shortcode-form .thumbnail-details-container.has-attachment {
     display: block; }
-
-@-webkit-keyframes attachment-preview-loading {
-  0% {
-    margin-left: -60px; }
-  100% {
-    margin-left: 60px; } }
 
 @keyframes attachment-preview-loading {
   0% {
@@ -218,8 +210,7 @@
   -webkit-transition: none; }
 
 .edit-shortcode-form .select2-dropdown {
-  -webkit-transform: translateY(-2px);
-          transform: translateY(-2px);
+  transform: translateY(-2px);
   z-index: 160001; }
 
 .edit-shortcode-form .select2 li {
